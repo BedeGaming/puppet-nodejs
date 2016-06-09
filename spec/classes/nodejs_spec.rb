@@ -6,7 +6,7 @@ describe 'nodejs', :type => :class do
   let(:facts) {{
     :kernel        => 'linux',
     :hardwaremodel => 'x86',
-    :osfamily      => 'Ubuntu',
+    :osfamily      => 'Debian',
   }}
 
   before(:each) {
@@ -22,7 +22,7 @@ describe 'nodejs', :type => :class do
    }
 
   describe 'with default parameters' do
-    it { should contain_nodejs__install('nodejs-stable') \
+    it { should contain_nodejs__instance('nodejs-stable') \
       .with_version('v6.0.0') \
       .with_target_dir('/usr/local/bin') \
       .with_make_install('true')
@@ -41,7 +41,7 @@ describe 'nodejs', :type => :class do
       :version  => 'latest',
     }}
 
-    it { should contain_nodejs__install('nodejs-latest') \
+    it { should contain_nodejs__instance('nodejs-latest') \
       .with_version('v6.0.1') \
       .with_target_dir('/usr/local/bin') \
       .with_make_install('true')
@@ -60,7 +60,7 @@ describe 'nodejs', :type => :class do
       :version  => 'v5.0.0',
     }}
 
-    it { should contain_nodejs__install('nodejs-v5.0.0') \
+    it { should contain_nodejs__instance('nodejs-v5.0.0') \
       .with_version('v5.0.0')
     }
 
@@ -75,7 +75,7 @@ describe 'nodejs', :type => :class do
       :target_dir  => '/bin',
     }}
 
-    it { should contain_nodejs__install('nodejs-stable') \
+    it { should contain_nodejs__instance('nodejs-stable') \
       .with_target_dir('/bin') \
     }
   end
@@ -85,7 +85,7 @@ describe 'nodejs', :type => :class do
       :make_install => false
     }}
 
-    it { should contain_nodejs__install('nodejs-stable') \
+    it { should contain_nodejs__instance('nodejs-stable') \
       .with_make_install('false')
     }
   end

@@ -14,9 +14,6 @@
 # [*node_path*]
 #   Value of the system environment variable (default: "/usr/local/node/node-default/lib/node_modules").
 #
-# [*python_package*]
-#   Python package name, defaults to python
-#
 # == Example:
 #
 #  include nodejs
@@ -26,13 +23,17 @@
 #  }
 #
 class nodejs(
-  $version        = 'stable',
-  $target_dir     = '/usr/local/bin',
-  $make_install   = true,
-  $node_path      = '/usr/local/node/node-default/lib/node_modules',
-  $python_package = 'python',
+  $version      = 'stable',
+  $target_dir   = '/usr/local/bin',
+  $make_install = true,
+  $node_path    = '/usr/local/node/node-default/lib/node_modules',
 ) {
   validate_string($node_path)
+  ensure_packages(['curl', 'tar', 'git', 'ruby'])
+  ensure_packages(['semver'], {
+    provider => 'gem',
+    require  => Package['ruby']
+  })
 
   $node_version = $version ? {
     undef    => nodejs_stable_version(),
@@ -41,11 +42,10 @@ class nodejs(
     default  => $version
   }
 
-  nodejs::install { "nodejs-${version}":
-    version        => $node_version,
-    target_dir     => $target_dir,
-    make_install   => $make_install,
-    python_package => $python_package,
+  ::nodejs::instance { "nodejs-${version}":
+    version      => $node_version,
+    target_dir   => $target_dir,
+    make_install => $make_install,
   }
 
   $nodejs_version_path = "/usr/local/node/node-${$node_version}"
@@ -54,7 +54,7 @@ class nodejs(
   file { $nodejs_default_path:
     ensure  => link,
     target  => $nodejs_version_path,
-    require => Nodejs::Install["nodejs-${version}"],
+    require => Nodejs::Instance["nodejs-${version}"],
   }
 
   $node_default_symlink = "${target_dir}/node"

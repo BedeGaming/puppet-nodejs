@@ -3,3 +3,4 @@ fixtures:
     nodejs: "#{source_dir}"
   repositories:
     stdlib: git://github.com/puppetlabs/puppetlabs-stdlib.git
+    gcc: git://github.com/puppetlabs/puppetlabs-gcc.git
