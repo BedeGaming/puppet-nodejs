@@ -1,3 +1,16 @@
+# = Define: nodejs::instance::uninstall
+#
+# == Parameters:
+#
+# [*node_version*]
+#   The version to remove.
+#
+# [*node_unpack_folder*]
+#   The target directory of nodejs.
+#
+# [*node_target_dir*]
+#   The target dir.
+#
 define nodejs::instance::uninstall($node_version, $node_unpack_folder, $node_target_dir) {
   include '::nodejs::params'
 
@@ -17,8 +30,7 @@ define nodejs::instance::uninstall($node_version, $node_unpack_folder, $node_tar
     ensure  => absent,
     force   => true,
     recurse => true,
-  }
-
+  } ->
   file { "${node_target_dir}/node-${node_version}":
     ensure => absent,
   }

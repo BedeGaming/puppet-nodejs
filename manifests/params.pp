@@ -13,7 +13,10 @@
 # It may be imported or inherited by other classes.
 #
 class nodejs::params {
+  if $caller_module_name != $module_name {
+    warning('::nodejs::params is not meant for public use!')
+  }
+
   $install_dir = '/usr/local/node'
   $target_dir  = '/usr/local/bin'
 }
-

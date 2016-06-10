@@ -32,14 +32,14 @@ class nodejs(
   ensure_packages(['curl', 'tar', 'git', 'ruby'])
   ensure_packages(['semver'], {
     provider => 'gem',
-    require  => Package['ruby']
+    require  => Package['ruby'],
   })
 
   $node_version = $version ? {
     undef    => nodejs_stable_version(),
     'stable' => nodejs_stable_version(),
     'latest' => nodejs_latest_version(),
-    default  => $version
+    default  => $version,
   }
 
   ::nodejs::instance { "nodejs-${version}":
@@ -65,13 +65,13 @@ class nodejs(
   file { $node_default_symlink:
     ensure  => link,
     target  => $node_default_symlink_target,
-    require => File[$nodejs_default_path]
+    require => File[$nodejs_default_path],
   }
   
   file { $npm_default_symlink:
     ensure  => link,
     target  => $npm_default_symlink_target,
-    require => File[$nodejs_default_path]
+    require => File[$nodejs_default_path],
   }
 
   file { '/etc/profile.d/nodejs.sh':

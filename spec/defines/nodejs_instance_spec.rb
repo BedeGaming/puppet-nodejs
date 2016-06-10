@@ -35,6 +35,9 @@ describe 'nodejs::instance', :type => :define do
     let(:params) {{
       :ensure => 'absent'
     }}
+    let(:facts) {{
+      :nodejs_installed_version => 'v5.4.0'
+    }}
 
     it { should contain_nodejs__instance__uninstall('node-setup-uninstall-v6.2.0') \
       .with_node_version('v6.2.0') \

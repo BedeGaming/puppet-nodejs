@@ -42,14 +42,14 @@ define nodejs::instance (
     undef    => $stable,
     'stable' => $stable,
     'latest' => nodejs_latest_version(),
-    default  => $version
+    default  => $version,
   }
 
   validate_nodejs_version($node_version)
 
   $node_target_dir = $target_dir ? {
     undef   => $::nodejs::params::target_dir,
-    default => $target_dir
+    default => $target_dir,
   }
 
   $node_unpack_folder = "${::nodejs::params::install_dir}/node-${node_version}"

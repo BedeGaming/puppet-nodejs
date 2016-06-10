@@ -45,7 +45,7 @@ define nodejs::npm::package(
 
   $install_pkg = $version ? {
     undef   => $npm_pkg,
-    default => "${npm_pkg}@${version}"
+    default => "${npm_pkg}@${version}",
   }
 
   $validate = "${npm_dir}/node_modules/${npm_pkg}:${install_pkg}"

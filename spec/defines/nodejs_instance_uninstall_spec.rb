@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe 'nodejs::instance::uninstall' do
   let(:title) { 'nodejs::instance::uninstall' }
+  let(:facts) {{
+    :nodejs_installed_version => 'v6.2.0'
+  }}
 
   describe 'any instance' do
     let(:params) {{
