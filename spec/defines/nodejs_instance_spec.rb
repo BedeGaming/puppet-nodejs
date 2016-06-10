@@ -8,32 +8,10 @@ describe 'nodejs::instance', :type => :define do
     :osfamily      => 'Debian',
   }}
 
-  before(:each) {
-    Puppet::Parser::Functions.newfunction(:nodejs_stable_version, :type => :rvalue) {
-        |args| 'v6.2.0'
-    }
-    Puppet::Parser::Functions.newfunction(:nodejs_latest_version, :type => :rvalue) {
-        |args| 'v6.2.0'
-    }
-    Puppet::Parser::Functions.newfunction(:validate_nodejs_version) {
-        |args| 'v6.2.0'
-    }
-  }
-
-  describe 'with default parameters' do
-    let(:params) {{}}
-
-    it { should contain_nodejs__instance__install('node-setup-install-v6.2.0') \
-      .with_node_version('v6.2.0') \
-      .with_node_unpack_folder('/usr/local/node/node-v6.2.0') \
-      .with_node_target_dir('/usr/local/bin') \
-      .with_make_install(true) \
-    }
-  end
-
   describe 'with absent=false' do
     let(:params) {{
-      :ensure => 'absent'
+      :ensure  => 'absent',
+      :version => 'v6.2.0'
     }}
     let(:facts) {{
       :nodejs_installed_version => 'v5.4.0'
@@ -43,19 +21,6 @@ describe 'nodejs::instance', :type => :define do
       .with_node_version('v6.2.0') \
       .with_node_unpack_folder('/usr/local/node/node-v6.2.0') \
       .with_node_target_dir('/usr/local/bin') \
-    }
-  end
-
-  describe 'with latest version' do
-    let(:params) {{
-      :version => 'latest'
-    }}
-
-    it { should contain_nodejs__instance__install('node-setup-install-v6.2.0') \
-      .with_node_version('v6.2.0') \
-      .with_node_unpack_folder('/usr/local/node/node-v6.2.0') \
-      .with_node_target_dir('/usr/local/bin') \
-      .with_make_install(true) \
     }
   end
 
@@ -74,7 +39,8 @@ describe 'nodejs::instance', :type => :define do
 
   describe 'with make_install=false' do
     let(:params) {{
-      :make_install => false
+      :make_install => false,
+      :version      => 'v6.2.0'
     }}
 
     it { should contain_nodejs__instance__install('node-setup-install-v6.2.0') \
@@ -87,7 +53,8 @@ describe 'nodejs::instance', :type => :define do
 
   describe 'with a given target dir' do
     let(:params) {{
-      :target_dir => '/bin'
+      :target_dir => '/bin',
+      :version    => 'v6.2.0'
     }}
 
     it { should contain_nodejs__instance__install('node-setup-install-v6.2.0') \
