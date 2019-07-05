@@ -17,6 +17,9 @@
 # [*python_package*]
 #   Python package name, defaults to python
 #
+# [*git_package*]
+#   Git package name, defaults to git
+
 # == Example:
 #
 #  class { 'nodejs':
@@ -33,6 +36,7 @@ define nodejs::install (
   $target_dir     = undef,
   $make_install   = true,
   $python_package = 'python',
+  $git_package    = 'git',
 ) {
 
   include nodejs::params
@@ -62,8 +66,8 @@ define nodejs::install (
       ensure => installed
     }
   }
-  if !defined(Package['git']) {
-    package {'git':
+  if !defined(Package[$git_package]) {
+    package {$git_package:
       ensure => installed
     }
   }
