@@ -17,6 +17,9 @@
 # [*python_package*]
 #   Python package name, defaults to python
 #
+# [*git_package*]
+#   Git package name, defaults to git
+#
 # == Example:
 #
 #  include nodejs
@@ -31,6 +34,7 @@ class nodejs(
   $make_install   = true,
   $node_path      = '/usr/local/node/node-default/lib/node_modules',
   $python_package = 'python',
+  $git_package    = 'git',
 ) {
   validate_string($node_path)
 
@@ -46,6 +50,7 @@ class nodejs(
     target_dir     => $target_dir,
     make_install   => $make_install,
     python_package => $python_package,
+    git_package    => $git_package,
   }
 
   $nodejs_version_path = "/usr/local/node/node-${$node_version}"
